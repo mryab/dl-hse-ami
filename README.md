@@ -15,7 +15,7 @@ the [wiki page](http://wiki.cs.hse.ru/%D0%93%D0%BB%D1%83%D0%B1%D0%B8%D0%BD%D0%BD
     - Training and regularization ([slides](https://github.com/aosokin/dl_cshse_ami/blob/master/2020-fall/lectures/DL20-fall-lecture4-training.pdf); [video](https://youtu.be/kE3AicLd5KE); [homework](./week04_training/homework.ipynb))
     - Best practices ([slides](./week05_best_practices/slides.pdf); [practice](https://github.com/aosokin/dl_cshse_ami/blob/master/2021-fall/homeworks_small/looking_for_bugs/looking_for_bugs.ipynb))
 * Advanced topics
-    - Applications to Computer Vision
+    - Applications to Computer Vision ([slides](./week06_vision/slides.pdf); [homework](./week06_vision/homework.ipynb))
     - Applications to Natural Language Processing
     - Transformer models
     - Adversarial X
