@@ -24,7 +24,7 @@ the [wiki page](http://wiki.cs.hse.ru/%D0%93%D0%BB%D1%83%D0%B1%D0%B8%D0%BD%D0%BD
     - Non-differentiable models
 * Invited talks: TBA
 
-Materials for previous iterations (taught by Anton Osokin) can be found at https://github.com/aosokin/dl_cshse_ami
+Materials for previous iterations (taught by [Anton Osokin](https://aosokin.github.io/)) that heavily influenced this course can be found at https://github.com/aosokin/dl_cshse_ami
 
 ## License
 
