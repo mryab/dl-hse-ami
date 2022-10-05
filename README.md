@@ -13,7 +13,7 @@ the [wiki page](http://wiki.cs.hse.ru/%D0%93%D0%BB%D1%83%D0%B1%D0%B8%D0%BD%D0%BD
     - Automatic differentiation ([slides](https://github.com/aosokin/dl_cshse_ami/blob/master/2020-fall/lectures/DL20-fall-lecture2-backprop.pdf); [video](https://youtu.be/cKMaEpf4MeU); [homework](./week02_backpropagation/homework.ipynb))
     - Architectures ([slides](https://github.com/aosokin/dl_cshse_ami/blob/master/2020-fall/lectures/DL20-fall-lecture3-models.pdf); [video](https://youtu.be/Uim4xLhXjRE); [homework](./week03_architectures/homework.ipynb))
     - Training and regularization ([slides](https://github.com/aosokin/dl_cshse_ami/blob/master/2020-fall/lectures/DL20-fall-lecture4-training.pdf); [video](https://youtu.be/kE3AicLd5KE); [homework](./week04_training/homework.ipynb))
-    - Best practices
+    - Best practices ([slides](./week05_best_practices/slides.pdf); [practice](https://github.com/aosokin/dl_cshse_ami/blob/master/2021-fall/homeworks_small/looking_for_bugs/looking_for_bugs.ipynb))
 * Advanced topics
     - Applications to Computer Vision
     - Applications to Natural Language Processing
