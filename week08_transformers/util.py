@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import torch.nn.functional as F
 
 from IPython.display import clear_output
-from tqdm.auto import tqdm
+from tqdm import tqdm
 
 
 # useful utility class for computing averages
