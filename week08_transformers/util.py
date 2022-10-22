@@ -1,9 +1,11 @@
 import math
 import torch
+
 import torch.nn as nn
 import matplotlib.pyplot as plt
 import torch.nn.functional as F
 
+from tqdm import tqdm
 from IPython.display import clear_output
 
 
@@ -93,7 +95,7 @@ def train(
 ):
     train_losses, train_accs = [], []
     val_losses, val_accs = [], []
-    for i in range(num_epochs):
+    for i in tqdm(range(num_epochs)):
         # run train epoch
         train_loss, train_acc = train_epoch(model, optimizer, train_loader, device)
         train_losses.append(train_loss)
