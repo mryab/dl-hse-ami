@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import torch.nn.functional as F
 
 from IPython.display import clear_output
+from tqdm.auto import tqdm
 
 
 # useful utility class for computing averages
@@ -27,17 +28,18 @@ class AverageMeter:
         self.avg = self.sum / self.count
 
 
-def train_epoch(model, optimizer, loader, device='cpu'):
+def train_epoch(model, optimizer, loader, scheduler, device='cpu'):
     model.train()
     loss_m = AverageMeter()
     acc_m = AverageMeter()
-    for inputs, targets in loader:
+    for inputs, targets in tqdm(loader):
         inputs, targets = inputs.to(device), targets.to(device)
         outputs = model(inputs).squeeze(-1)
         loss = F.binary_cross_entropy_with_logits(outputs, targets)
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
+        scheduler.step()
         # get accuracy
         acc = torch.eq(outputs.view(-1) > 0.0, targets).float().mean()
         # update stats
@@ -51,7 +53,7 @@ def val_epoch(model, loader, device='cpu'):
     model.eval()
     loss_m = AverageMeter()
     acc_m = AverageMeter()
-    for inputs, targets in loader:
+    for inputs, targets in tqdm(loader):
         inputs, targets = inputs.to(device), targets.to(device)
         outputs = model(inputs).squeeze(-1)
         loss = F.binary_cross_entropy_with_logits(outputs, targets)
@@ -95,7 +97,7 @@ def train(
     val_losses, val_accs = [], []
     for i in range(num_epochs):
         # run train epoch
-        train_loss, train_acc = train_epoch(model, optimizer, train_loader, device)
+        train_loss, train_acc = train_epoch(model, optimizer, train_loader, scheduler, device)
         train_losses.append(train_loss)
         train_accs.append(train_acc)
         # run val epoch
@@ -103,10 +105,8 @@ def train(
         val_losses.append(val_loss)
         val_accs.append(val_acc)
 
-        clear_output()
+        clear_output(wait=True)
         plot_history(train_losses, train_accs, val_losses, val_accs)
-
-        scheduler.step()
 
 
 # cosine annealing LR schedule with Warmup
@@ -128,10 +128,10 @@ class CosineAnnealingWithWarmupLR(torch.optim.lr_scheduler._LRScheduler):
 
 
 def hardcode_parameters(module: nn.Module):
-  for i, layer in enumerate(module.modules()):
-    if isinstance(layer, nn.Linear):
-        dim_out, dim_in = layer.weight.shape
-        layer.weight.data = torch.cos(i * torch.arange(dim_out))[:, None] \
-          * torch.cos(i * torch.arange(dim_in))[None, :]
-        if layer.bias is not None:
-          layer.bias.data.fill_(0)
+    for i, layer in enumerate(module.modules()):
+        if isinstance(layer, nn.Linear):
+            dim_out, dim_in = layer.weight.shape
+            layer.weight.data = torch.cos(i * torch.arange(dim_out))[:, None] \
+              * torch.cos(i * torch.arange(dim_in))[None, :]
+            if layer.bias is not None:
+                layer.bias.data.fill_(0)
