@@ -134,4 +134,4 @@ def hardcode_parameters(module: nn.Module):
         layer.weight.data = torch.cos(i * torch.arange(dim_out))[:, None] \
           * torch.cos(i * torch.arange(dim_in))[None, :]
         if layer.bias is not None:
-          layer.bias.data.fill_(0)
+            layer.bias.data.fill_(0)
