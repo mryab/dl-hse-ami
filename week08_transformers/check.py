@@ -24,9 +24,9 @@ def check_task_1(pred_res, pred_attn):
 
 
 def check_task_2(pred_attn_output):
-    true_attn_output = torch.tensor([[[-0.0336,  0.1684, -0.1582,  0.3691],
-                                      [-0.1676,  0.2687, -0.2593,  0.3329],
-                                      [ 0.0423,  0.1611, -0.1277,  0.4158]]])
+    true_attn_output = torch.tensor([[[ 0.3398,  0.1836, -0.1414, -0.3364],
+                                      [ 0.3239,  0.1750, -0.1355, -0.3224],
+                                      [ 0.6383,  0.3449, -0.2523, -0.6003]]])
 
     assert torch.allclose(pred_attn_output, true_attn_output, rtol=1e-4, atol=1e-4), "\033[91m Something is wrong :("
     print('\033[92m Well done :)')

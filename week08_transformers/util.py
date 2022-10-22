@@ -1,4 +1,6 @@
+import math
 import torch
+import torch.nn as nn
 import matplotlib.pyplot as plt
 import torch.nn.functional as F
 
@@ -102,7 +104,7 @@ def train(
         val_accs.append(val_acc)
 
         clear_output()
-        plot_history(train_losses, train_acc, val_losses, val_accs)
+        plot_history(train_losses, train_accs, val_losses, val_accs)
 
         scheduler.step()
 
@@ -123,3 +125,13 @@ class CosineAnnealingWithWarmupLR(torch.optim.lr_scheduler._LRScheduler):
         lr_factor = 0.5 * (1 + math.cos(math.pi * epoch / self.max_steps))
         lr_factor *= min(epoch / self.warmup, 1.0)
         return lr_factor
+
+
+def hardcode_parameters(module: nn.Module):
+  for i, layer in enumerate(module.modules()):
+    if isinstance(layer, nn.Linear):
+        dim_out, dim_in = layer.weight.shape
+        layer.weight.data = torch.cos(i * torch.arange(dim_out))[:, None] \
+          * torch.cos(i * torch.arange(dim_in))[None, :]
+        if layer.bias is not None:
+          layer.bias.data.fill_(0)
