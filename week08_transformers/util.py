@@ -29,7 +29,7 @@ class AverageMeter:
         self.avg = self.sum / self.count
 
 
-def train_epoch(model, optimizer, loader, device='cpu'):
+def train_epoch(model, optimizer, loader, scheduler=None, device='cpu'):
     model.train()
     loss_m = AverageMeter()
     acc_m = AverageMeter()
@@ -45,6 +45,9 @@ def train_epoch(model, optimizer, loader, device='cpu'):
         # update stats
         loss_m.update(loss.item(), inputs.shape[0])
         acc_m.update(acc.item(), inputs.shape[0])
+        # we use step-wise scheduler
+        if scheduler is not None:
+            scheduler.step()
     return loss_m.avg, acc_m.avg
 
 
@@ -97,7 +100,7 @@ def train(
     val_losses, val_accs = [], []
     for i in tqdm(range(num_epochs)):
         # run train epoch
-        train_loss, train_acc = train_epoch(model, optimizer, train_loader, device)
+        train_loss, train_acc = train_epoch(model, optimizer, train_loader, scheduler, device)
         train_losses.append(train_loss)
         train_accs.append(train_acc)
         # run val epoch
@@ -107,8 +110,6 @@ def train(
 
         clear_output()
         plot_history(train_losses, train_accs, val_losses, val_accs)
-
-        scheduler.step()
 
 
 # cosine annealing LR schedule with Warmup
