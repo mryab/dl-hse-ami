@@ -33,7 +33,7 @@ def train_epoch(model, optimizer, loader, scheduler=None, device='cpu'):
     model.train()
     loss_m = AverageMeter()
     acc_m = AverageMeter()
-    lr_m = AverageMeter()
+    epoch_lrs = []
     for inputs, targets in tqdm(loader):
         inputs, targets = inputs.to(device), targets.to(device)
         outputs = model(inputs).squeeze(-1)
@@ -46,11 +46,11 @@ def train_epoch(model, optimizer, loader, scheduler=None, device='cpu'):
         # update stats
         loss_m.update(loss.item(), inputs.shape[0])
         acc_m.update(acc.item(), inputs.shape[0])
-        lr_m.update(optimizer.param_groups[0]['lr'], 1)
+        epoch_lrs += [optimizer.param_groups[0]['lr']]
         # we use step-wise scheduler
         if scheduler is not None:
             scheduler.step()
-    return loss_m.avg, acc_m.avg, lr_m.avg
+    return loss_m.avg, acc_m.avg, epoch_lrs
 
 
 @torch.no_grad()
@@ -86,7 +86,7 @@ def plot_history(train_losses, train_accs, val_losses, val_accs, lrs, figsize=(1
     ax[1].legend()
 
     ax[2].plot(lrs, label='train')
-    ax[2].set_xlabel('Epoch', fontsize=16)
+    ax[2].set_xlabel('Step', fontsize=16)
     ax[2].set_ylabel('Learning rate', fontsize=16)
     ax[2].legend()
 
@@ -108,7 +108,7 @@ def train(
     lrs = []
     for i in range(num_epochs):
         # run train epoch
-        train_loss, train_acc, lr = train_epoch(model, optimizer, train_loader, scheduler, device)
+        train_loss, train_acc, epoch_lrs = train_epoch(model, optimizer, train_loader, scheduler, device)
         train_losses.append(train_loss)
         train_accs.append(train_acc)
         # run val epoch
@@ -116,7 +116,7 @@ def train(
         val_losses.append(val_loss)
         val_accs.append(val_acc)
         # update lr
-        lrs.append(lr)
+        lrs += epoch_lrs
 
         clear_output()
         plot_history(train_losses, train_accs, val_losses, val_accs, lrs)
