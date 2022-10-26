@@ -32,6 +32,7 @@ def train_epoch(model, optimizer, loader, scheduler=None, device='cpu'):
     model.train()
     loss_m = AverageMeter()
     acc_m = AverageMeter()
+    epoch_lrs = []
     for inputs, targets in tqdm(loader):
         inputs, targets = inputs.to(device), targets.to(device)
         outputs = model(inputs).squeeze(-1)
@@ -39,16 +40,16 @@ def train_epoch(model, optimizer, loader, scheduler=None, device='cpu'):
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
-        # we use a step-wise scheduler
-        if scheduler is not None:
-            scheduler.step()
         # get accuracy
         acc = torch.eq(outputs.view(-1) > 0.0, targets).float().mean()
         # update stats
         loss_m.update(loss.item(), inputs.shape[0])
         acc_m.update(acc.item(), inputs.shape[0])
-
-    return loss_m.avg, acc_m.avg
+        epoch_lrs += [optimizer.param_groups[0]['lr']]
+        # we use step-wise scheduler
+        if scheduler is not None:
+            scheduler.step()
+    return loss_m.avg, acc_m.avg, epoch_lrs
 
 
 @torch.no_grad()
@@ -83,10 +84,9 @@ def plot_history(train_losses, train_accs, val_losses, val_accs, lrs, figsize=(1
     ax[1].set_ylabel('Accuracy', fontsize=16)
     ax[1].legend()
 
-    ax[2].plot(lrs, label='train')
-    ax[2].set_xlabel('Epoch', fontsize=16)
+    ax[2].plot(lrs)
+    ax[2].set_xlabel('Step', fontsize=16)
     ax[2].set_ylabel('Learning rate', fontsize=16)
-    ax[2].legend()
 
     fig.tight_layout()
     plt.show()
@@ -106,16 +106,15 @@ def train(
     lrs = []
     for i in range(num_epochs):
         # run train epoch
-        train_loss, train_acc = train_epoch(model, optimizer, train_loader, scheduler, device)
+        train_loss, train_acc, epoch_lrs = train_epoch(model, optimizer, train_loader, scheduler, device)
         train_losses.append(train_loss)
         train_accs.append(train_acc)
         # run val epoch
         val_loss, val_acc = val_epoch(model, val_loader, device)
         val_losses.append(val_loss)
         val_accs.append(val_acc)
-
-        lr = optimizer.param_groups[0]['lr']
-        lrs.append(lr)
+        # update lr
+        lrs += epoch_lrs
 
         clear_output()
         plot_history(train_losses, train_accs, val_losses, val_accs, lrs)
@@ -144,6 +143,6 @@ def hardcode_parameters(module: nn.Module):
         if isinstance(layer, nn.Linear):
             dim_out, dim_in = layer.weight.shape
             layer.weight.data = torch.cos(i * torch.arange(dim_out))[:, None] \
-                                * torch.cos(i * torch.arange(dim_in))[None, :]
+                * torch.cos(i * torch.arange(dim_in))[None, :]
             if layer.bias is not None:
                 layer.bias.data.fill_(0)
