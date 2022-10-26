@@ -1,12 +1,11 @@
 import math
-import torch
 
-import torch.nn as nn
 import matplotlib.pyplot as plt
+import torch
+import torch.nn as nn
 import torch.nn.functional as F
-
-from tqdm import tqdm
 from IPython.display import clear_output
+from tqdm import tqdm
 
 
 # useful utility class for computing averages
