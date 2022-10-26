@@ -84,10 +84,9 @@ def plot_history(train_losses, train_accs, val_losses, val_accs, lrs, figsize=(1
     ax[1].set_ylabel('Accuracy', fontsize=16)
     ax[1].legend()
 
-    ax[2].plot(lrs, label='train')
+    ax[2].plot(lrs)
     ax[2].set_xlabel('Step', fontsize=16)
     ax[2].set_ylabel('Learning rate', fontsize=16)
-    ax[2].legend()
 
     fig.tight_layout()
     plt.show()
