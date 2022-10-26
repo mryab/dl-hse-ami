@@ -1,11 +1,12 @@
 import math
-
-import matplotlib.pyplot as plt
 import torch
+
 import torch.nn as nn
+import matplotlib.pyplot as plt
 import torch.nn.functional as F
-from IPython.display import clear_output
+
 from tqdm import tqdm
+from IPython.display import clear_output
 
 
 # useful utility class for computing averages
@@ -32,6 +33,7 @@ def train_epoch(model, optimizer, loader, scheduler=None, device='cpu'):
     model.train()
     loss_m = AverageMeter()
     acc_m = AverageMeter()
+    lr_m = AverageMeter()
     for inputs, targets in tqdm(loader):
         inputs, targets = inputs.to(device), targets.to(device)
         outputs = model(inputs).squeeze(-1)
@@ -39,16 +41,16 @@ def train_epoch(model, optimizer, loader, scheduler=None, device='cpu'):
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
-        # we use a step-wise scheduler
-        if scheduler is not None:
-            scheduler.step()
         # get accuracy
         acc = torch.eq(outputs.view(-1) > 0.0, targets).float().mean()
         # update stats
         loss_m.update(loss.item(), inputs.shape[0])
         acc_m.update(acc.item(), inputs.shape[0])
-
-    return loss_m.avg, acc_m.avg
+        lr_m.update(optimizer.param_groups[0]['lr'], 1)
+        # we use step-wise scheduler
+        if scheduler is not None:
+            scheduler.step()
+    return loss_m.avg, acc_m.avg, lr_m.avg
 
 
 @torch.no_grad()
@@ -106,15 +108,14 @@ def train(
     lrs = []
     for i in range(num_epochs):
         # run train epoch
-        train_loss, train_acc = train_epoch(model, optimizer, train_loader, scheduler, device)
+        train_loss, train_acc, lr = train_epoch(model, optimizer, train_loader, scheduler, device)
         train_losses.append(train_loss)
         train_accs.append(train_acc)
         # run val epoch
         val_loss, val_acc = val_epoch(model, val_loader, device)
         val_losses.append(val_loss)
         val_accs.append(val_acc)
-
-        lr = optimizer.param_groups[0]['lr']
+        # update lr
         lrs.append(lr)
 
         clear_output()
@@ -144,6 +145,6 @@ def hardcode_parameters(module: nn.Module):
         if isinstance(layer, nn.Linear):
             dim_out, dim_in = layer.weight.shape
             layer.weight.data = torch.cos(i * torch.arange(dim_out))[:, None] \
-                                * torch.cos(i * torch.arange(dim_in))[None, :]
+                * torch.cos(i * torch.arange(dim_in))[None, :]
             if layer.bias is not None:
                 layer.bias.data.fill_(0)
