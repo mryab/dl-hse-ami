@@ -18,7 +18,7 @@ the [wiki page](http://wiki.cs.hse.ru/%D0%93%D0%BB%D1%83%D0%B1%D0%B8%D0%BD%D0%BD
     - Applications to Computer Vision ([slides](./week06_vision/slides.pdf); [homework](./week06_vision/homework.ipynb))
     - Applications to Natural Language Processing ([slides](./week07_nlp/slides.pdf); [homework](./week07_nlp/homework.ipynb))
     - Transformer models ([slides](./week08_transformers/slides.pdf); [homework](./week08_transformers/homework.ipynb))
-    - Adversarial X
+    - Adversarial X ([slides](./week09_adversarial/slides.pdf); [homework](./week09_adversarial/homework.ipynb))
     - Probabilistic models
     - Differentiable programming
     - Non-differentiable models
