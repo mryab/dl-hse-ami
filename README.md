@@ -20,7 +20,7 @@ the [wiki page](http://wiki.cs.hse.ru/%D0%93%D0%BB%D1%83%D0%B1%D0%B8%D0%BD%D0%BD
     - Transformer models ([slides](./week08_transformers/slides.pdf); [homework](./week08_transformers/homework.ipynb))
     - Adversarial X ([slides](./week09_adversarial/slides.pdf); [homework](./week09_adversarial/homework.ipynb))
     - Probabilistic models ([slides](./week10_probmodels/slides.pdf), [homework](./week10_probmodels/homework.ipynb))
-    - Differentiable programming
+    - Differentiable programming ([slides](./week11_diffprogramming/slides.pdf), [homework](./week11_diffprogramming/homework.ipynb))
     - Non-differentiable models
 * Invited talks: TBA
 
