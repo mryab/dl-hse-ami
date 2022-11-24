@@ -1,0 +1,8 @@
+gdown==4.5.3
+sacrebleu==2.3.1
+sacremoses==0.0.53
+tokenizers==0.13.1
+torch==1.13.0
+torchdata==0.5.0
+torchtext==0.14.0
+tqdm==4.64.1
