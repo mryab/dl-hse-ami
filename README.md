@@ -21,7 +21,7 @@ the [wiki page](http://wiki.cs.hse.ru/%D0%93%D0%BB%D1%83%D0%B1%D0%B8%D0%BD%D0%BD
     - Adversarial X ([slides](./week09_adversarial/slides.pdf); [homework](./week09_adversarial/homework.ipynb))
     - Probabilistic models ([slides](./week10_probmodels/slides.pdf), [homework](./week10_probmodels/homework.ipynb))
     - Differentiable programming ([slides](./week11_diffprogramming/slides.pdf), [homework](./week11_diffprogramming/homework.ipynb))
-    - Non-differentiable models
+    - Non-differentiable models ([slides](./week12_nondiffnets/slides.pdf), [homework](./week12_nondiffnets/homework.ipynb))
 * Invited talks: TBA
 
 Materials for previous iterations (taught by [Anton Osokin](https://aosokin.github.io/)) that heavily influenced this course can be found at https://github.com/aosokin/dl_cshse_ami
