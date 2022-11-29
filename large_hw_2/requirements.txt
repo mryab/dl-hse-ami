@@ -1,4 +1,4 @@
-gdown==4.5.3
+gdown==4.5.4
 sacrebleu==2.3.1
 sacremoses==0.0.53
 tokenizers==0.13.1

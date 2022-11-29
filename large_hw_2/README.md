@@ -22,8 +22,8 @@ For evaluation data, all sentences are enclosed within <seg id="..."> blocks.
 This assignment has 6 compulsory tasks and two bonus ones:
 
 ### Task 1 (1 point)
-Using the [datasets](https://github.com/huggingface/datasets) library, parse the dataset files into 
-[Dataset](https://huggingface.co/docs/datasets/package_reference/main_classes#datasets.Dataset) objects.
+Using the [torch.utils.data](https://pytorch.org/docs/stable/data.html) module, parse the dataset files into 
+[Dataset](https://pytorch.org/docs/stable/data.html#torch.utils.data.Dataset) objects.
 Implement the following functions inside data.py: `process_training_file`, `process_evaluation_file`, `convert_files`, `TranslationDataset`.
 
 ### Task 2 (0.5 points)
@@ -50,7 +50,7 @@ at a time, it should process a batch of examples in parallel. Note that the resu
 equivalent to the result of running code from Task 4: you can check this by running the decoding with a batch size of 1.
 You can reuse the template of the beam search function to implement it.
 
-### Task 6 (1 points)
+### Task 6 (1 point)
 Implement a [**constrained**](https://aclanthology.org/N18-1119/) version of batched beam search that allows to force a list of strings 
 given by the user to appear in the translation. 
 Validate that it works manually by creating a script that takes a pretrained model and several "hints" and applies it to the test set.
