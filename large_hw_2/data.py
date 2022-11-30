@@ -7,7 +7,8 @@ from torch.utils.data import Dataset
 
 def process_training_file(input_path: Path, output_path: Path):
     """
-    Processes raw training files ("train.tags.SRC-TGT.*"), saving the output as a list of unformatted examples.
+    Processes raw training files ("train.tags.SRC-TGT.*"), saving the output as a sequence of unformatted examples
+    (.txt file, one example per line).
     :param input_path: Path to the file with the input data (formatted examples)
     :param output_path: Path to the file with the output data (one example per line)
     """
@@ -17,7 +18,7 @@ def process_training_file(input_path: Path, output_path: Path):
 def process_evaluation_file(input_path: Path, output_path: Path):
     """
     Processes raw validation and testing files ("IWSLT17.TED.{dev,test}2010.SRC-TGT.*.xml"),
-    saving the output as a list of unformatted examples.
+    saving the output as a sequence of unformatted examples (.txt file, one example per line).
     :param input_path: Path to the file with the input data (formatted examples)
     :param output_path: Path to the file with the output data (one example per line)
     """
@@ -26,7 +27,7 @@ def process_evaluation_file(input_path: Path, output_path: Path):
 
 def convert_files(base_path: Path, output_path: Path):
     """
-    Given a directory containing all the dataset files, convert each one into the "one sentence per line" format.
+    Given a directory containing all the dataset files, convert each one into the "one example per line" format.
     :param base_path: Path containing files with original data
     :param output_path: Path containing files with processed data
     """
@@ -92,7 +93,7 @@ class SpecialTokens(Enum):
 def train_tokenizers(base_dir: Path, save_dir: Path):
     """
     Trains tokenizers for source and target languages and saves them to `save_dir`.
-    :param base_dir: Directory containing processed training and validation data
+    :param base_dir: Directory containing processed training and validation data (.txt files from `convert_files`)
     :param save_dir: Directory for storing trained tokenizer data (two files: `tokenizer_de.json` and `tokenizer_en.json`)
     """
     pass
