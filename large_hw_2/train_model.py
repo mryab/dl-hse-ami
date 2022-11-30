@@ -30,7 +30,7 @@ def evaluate(model: TranslationModel, val_dataloader, device):
     pass
 
 
-def train_model(tokenizer_path, data_dir, num_epochs):
+def train_model(data_dir, tokenizer_path, num_epochs):
     src_tokenizer = Tokenizer.from_file(str(tokenizer_path / "tokenizer_de.json"))
     tgt_tokenizer = Tokenizer.from_file(str(tokenizer_path / "tokenizer_en.json"))
 
@@ -128,7 +128,7 @@ if __name__ == "__main__":
 
     # argument groups are useful for separating semantically different parameters
     hparams_group = parser.add_argument_group("Training hyperparameters")
-    hparams_group.add_argument_group(
+    hparams_group.add_argument(
         "--num-epochs", type=int, default=50, help="Number of training epochs"
     )
 
