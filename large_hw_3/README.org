@@ -51,7 +51,7 @@ Implement the [[https://arxiv.org/abs/2208.12242][DreamBooth]] pipeline for the 
 (e.g. Studio Ghibli anime style), using the implemented pipeline learn
 the style token and finetune the model for the target domain, use this model to
 perform textual img2img translation from above. Instead of 
-manually specifying the target prompt use "source prompt in a <tok> style". Compare DreamBooth style-transfer with
+manually specifying the target prompt use "source prompt in a <tok> style". Compare DreamBooth style transfer with
 manual prompting. You are free to choose dataset/target style for this
 task.
 
