@@ -1,0 +1,93 @@
+#+title: Primary Home Assignment 3: Image Translation
+
+In this assignment, you should build an image translation
+pipeline with either GANs or Diffusion Models.
+
+* Tasks
+This assignment is less formal than preceeding ones, it is rather
+/creative/, you are tasked with implementing one of the approaches for
+image translation ([[https://arxiv.org/abs/1611.07004][pix2pix]], [[todo][CycleGAN]], [[https://arxiv.org/abs/2208.01626][prompt2prompt]], [[https://arxiv.org/abs/2210.05559][CycleDiffusion]])
+on two datasets of your choosing.
+
+The extra freedom means that an extensive report is essential. We would score
+the assignments primarily based on the quality of the report (with up to
+-10 penalty points for bad reports). The report should be formatted
+either as a pdf or as a wandb report.
+
+In addition to the report you should, as usual, provide a script
+reproducing your results.
+
+** Variation 1: GAN* variation (the easy way)
+In this variation you should implement one of the good old GAN-based
+image translation methods (pix2pix or CycleGAN). You are not allowed
+to use official implementations of pix2pix and CycleGAN
+(https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix).
+
+*** Task 1 (5 points)
+Implement the basic model without the adversarial objective. Train it on one
+dataset. 
+
+*** Task 2 (5 points)
+Implement the adversarial objective and add the second
+dataset. Compute some (e.g. FID) quantitative metric and add it to the
+report in addition to the qualitative results.
+
+** Variation 2: Diffusion variation (the fun way)
+
+*** Task 1 (5 points)
+Implement sampling from the latent diffusion model, implement one of
+the ideas for text-guided image translation for it ([[https://arxiv.org/abs/2208.01626][prompt2prompt]],
+[[https://arxiv.org/abs/2210.05559][CycleDiffusion]]). Test your implementation on one dataset (horse2zebra
+is a suitable one, but you are free to choose any).
+
+You are allowed to use [[https://github.com/huggingface/diffusers][diffusers]] here, *BUT* only for loading
+StableDiffusion model and using samplers (you can use
+=diffusers.schedulers= and =diffusers.models=, but you probably would
+have to modify the unet code for prompt2prompt). You should implement
+the pipeline for textual img2img translation yourself!
+
+*** Task 2 (5 points)
+Implement the [[https://arxiv.org/abs/2208.12242][DreamBooth]] pipeline for the StableDiffusion model. Choose a target style/dataset
+(e.g. Studio Ghibli anime style), using the implemented pipeline learn
+the style token and finetune the model for the target domain, use this model to
+perform textual img2img translation from above. Instead of 
+manually specifying the target prompt use "source prompt in a <tok> style". Compare DreamBooth style transfer with
+manual prompting. You are free to choose dataset/target style for this
+task.
+
+** Note on datasets (2 bonus points)
+
+For both variations you should test your methods on two datasets of
+your choosing. We recommend you to choose the first (debug) dataset
+from the standard set of datasets used in the pix2pix paper
+(e.g. facades or maps for pix2pix and cyclegan or horse2zebra, night2day
+for diffusion models).
+
+The second dataset could be whatever you want. We would give up to 2
+bonus points for original/fun datasets (original meaning not loaded from
+kaggle datasets, or any other pre-collected dataset).
+
+* Deadline
+There are two deadlines for the assignment:
+- *Intermediate deadline (December 14 08:00MSK)*: you need to submit
+  code for the first task with a few image translation examples
+- *Final deadline (December 19 08:00MSK)*: you need to submit the entire assignment.
+All deadlines are strict.
+
+* Packages
+The list of all packages explicitly available to you with specific
+versions is given in the [[./requirements.txt][requirements.txt]] file.
+All additional libraries (excluding modules of the Python 3.10
+standard library) are not guaranteed to be installed: if your code
+does not run on the system because of `ImportError`s, you will not get
+points for corresponding tasks.  However, if you wish to request
+adding a specific library to the requirements file, you may discuss it
+with @puhsu until the final deadline.
+
+* Plagiarism
+Sharing code of your solution with fellow students is prohibited.  If
+you have discussed any parts of the assignment with other students or
+used materials from PyTorch help/tutorials, make sure to state this in
+Anytask when submitting the assignment.  Copying code from any source
+other than PyTorch help or tutorials is not allowed.
+
