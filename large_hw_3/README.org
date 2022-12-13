@@ -6,7 +6,7 @@ pipeline with either GANs or Diffusion Models.
 * Tasks
 This assignment is less formal than preceeding ones, it is rather
 /creative/, you are tasked with implementing one of the approaches for
-image translation ([[https://arxiv.org/abs/1611.07004][pix2pix]], [[todo][CycleGAN]], [[https://arxiv.org/abs/2208.01626][prompt2prompt]], [[https://arxiv.org/abs/2210.05559][CycleDiffusion]])
+image translation ([[https://arxiv.org/abs/1611.07004][pix2pix]], [[https://arxiv.org/abs/1703.10593][CycleGAN]], [[https://arxiv.org/abs/2208.01626][prompt2prompt]], [[https://arxiv.org/abs/2210.05559][CycleDiffusion]])
 on two datasets of your choosing.
 
 The extra freedom means that an extensive report is essential. We would score
